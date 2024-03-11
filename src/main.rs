@@ -12,8 +12,15 @@ use trust_dns_resolver::{
 };
 
 fn main() {
-    let addr = "0.0.0.0:1053".parse::<SocketAddr>().unwrap();
+    use env_logger::{Builder, Target};
+    Builder::new()
+        .target(Target::Stdout)
+        .filter_level(log::LevelFilter::Info)
+        .init();
+
+    let addr = "127.0.0.1:1053".parse::<SocketAddr>().unwrap();
     let socket = UdpSocket::bind(addr).unwrap();
+
     log::info!("Listening on {}", addr);
 
     let mut buf = vec![0u8; 512];
